@@ -14,11 +14,11 @@ def split_feature_target(train_data,test_data,target_idx) :
     y_train=[]
     y_test=[]
     for row in train_data: 
-        X_train.append(train_data[:target_idx]+train_data[target_idx+1:])
-        y_train.append(train_data[target_idx])
-    for row in train_data: 
-        X_test.append(test_data[:target_idx]+test_data[target_idx+1:])
-        y_test.append(test_data[target_idx])
+        X_train.append(row[:target_idx]+row[target_idx+1:])
+        y_train.append(row[target_idx])
+    for row in test_data: 
+        X_test.append(row[:target_idx]+row[target_idx+1:])
+        y_test.append(row[target_idx])
     return X_train,y_train,X_test,y_test
  
 def train_test_split(data,target_idx,test_size):

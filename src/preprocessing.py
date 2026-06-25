@@ -3,17 +3,17 @@ def fill_missing_with_mean(data,col_idx) :
     count=0
     for row in data : 
         value=row[col_idx]
-        if value!="NaN" : 
+        if value not in ("","NaN") : 
             total+=float(value)
             count+=1
     mean=total/count
     for row in data : 
-        if row[col_idx]=="NaN" : 
+        if row[col_idx] in ("","NaN") : 
             row[col_idx]=mean
-    return mean
+    return data
 
 def winsorization(data,col_idx) : 
-    values=sorted(float(row[col_idx] for row in data))
+    values=sorted(float(row[col_idx]) for row in data)
     n=len(values)
     q1=values[n//4]
     q3=values[3*n//4]
@@ -22,10 +22,10 @@ def winsorization(data,col_idx) :
     lower=q1-1.5*iqr
     upper=q3+1.5*iqr
     for row in data : 
-        value=row[col_idx]
+        value=float(row[col_idx])
         if(value < lower) : 
             row[col_idx]=lower
-        if(value>upper): 
+        elif(value>upper): 
             row[col_idx]=upper
     
     return data 
@@ -33,7 +33,7 @@ def winsorization(data,col_idx) :
 def remove_row_wrt_column(data,col_idx):
     cleaned_data=[]
     for row in data :
-        if row[col_idx] !="NaN":
+        if row[col_idx] not in ("", "NaN"):
             cleaned_data.append(row)
     return cleaned_data
 
@@ -51,6 +51,7 @@ def mean_normalization(data,col_idx):
         value=float(row[col_idx])
         row[col_idx]=(value-mean)/diff
     return data
+
 
 
     

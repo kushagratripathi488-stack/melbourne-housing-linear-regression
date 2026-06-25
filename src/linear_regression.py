@@ -1,24 +1,42 @@
+import time 
 def predic_func(features,weights,bias) : 
     return bias+sum(f*w for f,w in zip(features,weights))
 
-def cost_func(feature_data,target_data,weights,bias):
-    count=len(feature_data)*2
-    initial=sum(((predic_func(f,weights,bias)-y)**2 for f,y in zip(feature_data,target_data)))
-    cost=initial/count
-    return cost
+def cost_func(feature_data, target_data, weights, bias):
+    m = len(feature_data)
+
+    total = sum(
+        (predic_func(f, weights, bias) - y) ** 2
+        for f, y in zip(feature_data, target_data)
+    )
+    return total / (2 * m)
 
 def gradient_descent(features_data,target_data,weights,bias,learning_rate,epochs): 
     m=len(features_data)
-    for epoch in range(epochs): 
-        db=sum(((predic_func(f,weights,bias)-y) for f,y in zip(features_data,target_data)))/m
+    prev_cost=cost_func(features_data,target_data,weights,bias)
+    costs=[prev_cost]
+    start=time.time()
+    times=[0]
+    for epoch in range(epochs):
+        errors = [
+    predic_func(f, weights, bias) - y
+    for f, y in zip(features_data, target_data)
+]
+        db=sum(error for error in errors)/m
         dw=[]
         for i in range(len(weights)): 
-            derivative=sum(((predic_func(f,weights,bias)-y)*f[i] for f,y in zip(features_data,target_data)))/m
+            derivative=sum((error*f[i] for error,f in zip(errors,features_data)))/m
             dw.append(derivative)
         bias-=learning_rate*db
         for j in range(len(weights)):
             weights[j]-=learning_rate*dw[j]
-        if epoch % 100 == 0:
+        
+        if epoch % 20 == 0:
             cost = cost_func(features_data,target_data,weights,bias)
-            print(f"Epoch {epoch}: Cost = {cost}")
-    return weights,bias
+            costs.append(cost)
+            if epoch % 100 ==0:
+                print(f"Epoch {epoch}: Cost = {cost}")
+            temp=time.time()
+            times.append(temp-start)
+            prev_cost=cost
+    return weights,bias,costs,times
