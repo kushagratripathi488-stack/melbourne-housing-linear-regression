@@ -34,8 +34,8 @@ def gradient_descent(features_data,target_data,weights,bias,learning_rate,epochs
         if epoch % 20 == 0:
             cost = cost_func(features_data,target_data,weights,bias)
             costs.append(cost)
-            if epoch % 100 ==0:
-                print(f"Epoch {epoch}: Cost = {cost}")
+            #if epoch % 100 ==0:
+                #print(f"Epoch {epoch}: Cost = {cost}")
             temp=time.time()
             times.append(temp-start)
             prev_cost=cost
