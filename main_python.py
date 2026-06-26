@@ -5,9 +5,9 @@ from src.preprocessing import fill_missing_with_mean
 from src.preprocessing import winsorization
 from src.preprocessing import mean_normalization
 from src.train_test_split import train_test_split
-from src.linear_regression import predic_func
-from src.linear_regression import cost_func
-from src.linear_regression import gradient_descent
+from src.pure_python_regression import predic_func
+from src.pure_python_regression import cost_func
+from src.pure_python_regression import gradient_descent
 from src.evaluaton import r2_score
 from src.evaluaton import root_mean_squared_error
 from src.evaluaton import mean_absolute_error
@@ -22,9 +22,9 @@ feature_column=['Rooms','Bathroom','Car','YearBuilt','Distance','Lattitude','Lon
 
 for column in data_column: 
     if column !='Price' :
-        data=fill_missing_with_mean(rows,columns.index(column))
-        data=winsorization(rows,columns.index(column))
-        data=mean_normalization(rows,columns.index(column))
+        rows=fill_missing_with_mean(rows,columns.index(column))
+        rows=winsorization(rows,columns.index(column))
+        rows=mean_normalization(rows,columns.index(column))
 
 #Feature Scaling
 data_indices=[columns.index(features) for features in data_column]
