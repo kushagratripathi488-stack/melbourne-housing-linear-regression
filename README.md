@@ -1,133 +1,141 @@
-# Melbourne Housing Price Prediction using Multivariable Linear Regression
+# Melbourne Housing Price Prediction using Linear Regression
 
-## Project Overview
+## Overview
 
-This project implements a Multivariable Linear Regression model from scratch using pure Python and Gradient Descent. The objective is to predict housing prices from the Melbourne Housing Dataset while understanding the mathematical foundations of machine learning without relying on external machine learning libraries.
+This project implements Multivariate Linear Regression from scratch to predict Melbourne housing prices. The project compares three different implementations:
 
-The project focuses on:
+* **Part 1:** Pure Python implementation of Gradient Descent
+* **Part 2:** NumPy-optimized implementation using vectorized operations
+* **Part 3:** Scikit-learn implementation using `LinearRegression`
 
-* Data preprocessing
-* Feature normalization
-* Gradient Descent optimization
-* Cost function convergence
-* Model evaluation using regression metrics
+The objective is to study the effects of vectorization and optimized numerical libraries on training speed and model performance.
 
 ---
 
 ## Dataset
 
-Dataset: Melbourne Housing Price Dataset
+* **Dataset:** Melbourne Housing Dataset
+* **Target Variable:** `Price`
 
-Target Variable:
-
-* Price
-
-Selected Features:
+### Features Used
 
 * Rooms
-* Distance
 * Bathroom
 * Car
-* Longtitude
-* Lattitude
 * YearBuilt
-
-Rows containing missing values were removed during preprocessing.
+* Distance
+* Lattitude
+* Longtitude
 
 ---
 
 ## Project Structure
 
 ```text
-melbourne-linear-regression/
+melbourne-housing-linear-regression/
 │
-├── melb_data.csv
-│
+├── images/
+├── report/
 ├── src/
 │   ├── data_loader.py
 │   ├── preprocessing.py
+│   ├── preprocessing_numpy.py
 │   ├── train_test_split.py
-│   ├── linear_regression.py
+│   ├── train_test_split_numpy.py
+│   ├── pure_python_regression.py
+│   ├── numpy_regression.py
+│   ├── sklearn_regression.py
 │   └── evaluation.py
 │
-├── images/
-│   └── convergence_plot.png
-│
-├── report/
-│   └── report.pdf
-│
-├── main.py
-├── README.md
-└── .gitignore
+├── main_python.py
+├── main_numpy.py
+├── main_sklearn.py
+├── compare_models.py
+├── melb_data.csv
+└── README.md
 ```
 
 ---
 
-## Methodology
+## Data Preprocessing
 
-### 1. Data Loading
+The following preprocessing steps were applied:
 
-The dataset is loaded using Python's built-in CSV module.
+* Missing value imputation using column mean
+* Winsorization for outlier treatment
+* Mean Normalization
+* Train-Test Split (80:20)
 
-### 2. Data Cleaning
+---
 
-Rows containing missing values are removed.
+## Model Implementations
 
-### 3. Feature Scaling
+### Part 1 — Pure Python
 
-Features are normalized to improve convergence speed during Gradient Descent.
+Implemented from scratch using:
 
-### 4. Train-Test Split
+* Lists
+* Loops
+* Manual Gradient Descent
 
-The dataset is split into:
+---
 
-* 80% Training Data
-* 20% Testing Data
+### Part 2 — NumPy
 
-### 5. Linear Regression
+Optimized implementation using:
 
-The prediction model is:
+* NumPy arrays
+* Vectorized matrix multiplication
+* `np.dot`
+* Broadcasting
 
-ŷ = w₁x₁ + w₂x₂ + ... + wₙxₙ + b
+---
 
-### 6. Cost Function
+### Part 3 — Scikit-learn
 
-Mean Squared Error (MSE) is used as the loss function.
+Implemented using:
 
-### 7. Optimization
+```python
+LinearRegression()
+```
 
-Gradient Descent is used to learn model parameters.
+for comparison with the custom implementations.
 
 ---
 
 ## Evaluation Metrics
 
-The model is evaluated using:
+The models are evaluated using:
 
-* Mean Squared Error (MSE)
-* Root Mean Squared Error (RMSE)
 * R² Score
+* Mean Absolute Error (MAE)
+* Root Mean Squared Error (RMSE)
+* Training Cost
+* Training Time
+
+---
+
+## Visualizations
+
+The project includes:
+
+* Cost vs Iterations
+* Cost vs Time
+* Training Time Comparison
+* Final Cost Comparison
+* R² Score Comparison
+* MAE Comparison
+* RMSE Comparison
 
 ---
 
 ## Results
 
-| Metric        | Value      |
-| ------------- | ---------- |
-| Learning Rate |0.1         |
-| Epochs        |1001        |
-| Final MAE     |298011.53896|
-| RMSE          |414303.73288|
-| R² Score      |0.544343    |
-| Training Time |14.30373    |
-
----
-
-## Cost Function Convergence
-
-The following graph illustrates the decrease in cost over training epochs.
-
-![alt text](<Cost vs Time for pure python model for lineat regression-1.png>)
+| Model        | Training Time | R² Score |  MAE  |  RMSE |
+| ------------ | ------------: | -------: | ----: | ----: |
+| Pure Python  |  12.8211      |  0.51524 |299519 |450236 |
+| NumPy        |  0.18682      |  0.50895 |310370 |459989 |
+| Scikit-learn |  0.01216      |  0.52662 |307352 |448051 |
 
 ---
 
@@ -136,47 +144,36 @@ The following graph illustrates the decrease in cost over training epochs.
 Clone the repository:
 
 ```bash
-git clone https://github.com/kushagratripathi488-stack/melbourne-housing-linear-regression-with-pure-python/commits/main/
+git clone https://github.com/kushagratripathi488-stack/melbourne-housing-linear-regression-with-pure-python
 ```
 
-Navigate to the project directory:
+Install dependencies:
 
 ```bash
-cd melbourne-linear-regression
+pip install numpy matplotlib scikit-learn
 ```
 
-Run the project:
+Run each implementation individually:
 
 ```bash
-python main.py
+python main_python.py
+python main_numpy.py
+python main_sklearn.py
+```
+
+Generate comparison plots:
+
+```bash
+python compare_models.py
 ```
 
 ---
 
-## Key Learnings
+## Key Learning Outcomes
 
-* Implementation of Multivariable Linear Regression from scratch
-* Understanding Gradient Descent optimization
-* Data preprocessing techniques
-* Feature scaling and normalization
-* Model evaluation using regression metrics
-* Git and GitHub workflow for machine learning projects
-
----
-
-## Future Improvements
-
-* Mini-batch Gradient Descent
-* Stochastic Gradient Descent
-* L2 Regularization
-* Feature Engineering
-* Hyperparameter Tuning
-* Comparison with NumPy and Scikit-Learn implementations
-
----
-
-## Author
-
-Kushagra Tripathi
-
-GitHub:@kushagra3148
+* Implemented Multivariate Linear Regression from scratch.
+* Derived and implemented Gradient Descent manually.
+* Optimized numerical computations using NumPy vectorization.
+* Compared custom implementations with Scikit-learn.
+* Evaluated models using standard regression metrics.
+* Analyzed convergence behavior and computational performance.
